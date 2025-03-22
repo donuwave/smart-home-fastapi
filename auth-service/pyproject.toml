@@ -3,7 +3,7 @@ name = "smart-home-auth-service"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Doonu",email = "DonuSuzerain@yandex.ru"}
+    {name = "donuwave",email = "d_tareev@mail.ru"}
 ]
 readme = "README.md"
 requires-python = ">=3.9"
@@ -18,9 +18,9 @@ dependencies = [
     "asyncpg (>=0.30.0,<0.31.0)",
     "bcrypt (>=4.2.1,<5.0.0)",
     "jwt (>=1.3.1,<2.0.0)",
-    "pyjwt (>=2.10.1,<3.0.0)",
     "greenlet (>=3.1.1,<4.0.0)",
-    "alembic (>=1.14.1,<2.0.0)"
+    "alembic (>=1.14.1,<2.0.0)",
+    "pyjwt (>=2.10.1,<3.0.0)"
 ]
 
 
