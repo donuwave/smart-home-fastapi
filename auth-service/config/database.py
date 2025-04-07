@@ -25,8 +25,7 @@ class DatabaseHelper:
 
     async def scoped_session_dependency(self) -> AsyncSession:
         session = self.session_factory()
-        yield session
-        await session.close()
+        return session
 
 
 db_helper = DatabaseHelper(url=app_settings.DATABASE_URL, echo=app_settings.ECHO)

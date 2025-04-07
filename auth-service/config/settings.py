@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     DB_DRIVER: str = "postgresql+asyncpg"
     DB_NAME: str = ""
     ECHO: bool = False
+    AMQP_URL: str = 'amqp://guest:guest@localhost:5672'
+
 
     auth: AuthJWT = AuthJWT()
 

@@ -10,3 +10,9 @@ services:
       POSTGRES_PASSWORD: qwerty
       POSTGRES_USER: postgres
       POSTGRES_DB: smart-home-auth-service
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
