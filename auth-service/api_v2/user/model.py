@@ -1,5 +1,3 @@
-from typing import TYPE_CHECKING
-
 from pydantic import EmailStr
 from sqlalchemy import String, ForeignKey, LargeBinary
 from sqlalchemy.orm import Mapped, mapped_column, relationship

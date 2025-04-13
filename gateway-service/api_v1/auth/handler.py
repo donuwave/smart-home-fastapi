@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Response
 from fastapi.params import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
@@ -41,7 +41,8 @@ async def refresh(
 
 @router.post("/logout", dependencies=[Depends(http_bearer)])
 async def logout(
+    response: Response,
     auth_service: Annotated[AuthService, Depends(get_auth_service)],
     credentials: HTTPAuthorizationCredentials = Depends(http_bearer),
 ):
-    return await auth_service.logout(credentials=credentials)
+    return await auth_service.logout(credentials=credentials, response=response)

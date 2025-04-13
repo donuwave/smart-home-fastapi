@@ -2,9 +2,8 @@ from dataclasses import dataclass
 
 from fastapi import HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from api_v1.auth.schema import RegistrationRequest, AuthResponse, LoginRequest
+from api_v1.auth.schema import RegistrationRequest, AuthResponse, LoginRequest, RefreshRequest, LogoutRequest
 from api_v1.auth.utils import (
     hash_password,
     create_access_token,
@@ -25,7 +24,6 @@ from api_v1.user.schema import UserCreate
 
 @dataclass
 class AuthService:
-    db_session: AsyncSession
     user_repository: UserRepository
     profile_repository: ProfileRepository
     session_repository: SessionRepository
@@ -99,16 +97,12 @@ class AuthService:
             access_token=access_token, refresh_token=refresh_token, user_id=user_id
         )
 
-    async def refresh(self, credentials: HTTPAuthorizationCredentials) -> AuthResponse:
-        if credentials is None:
-            raise HTTPException(status_code=401, detail="Токен отсутствует")
-
-        refresh_token = credentials.credentials
+    async def refresh(self, refresh_request: RefreshRequest) -> AuthResponse:
+        refresh_token = refresh_request.refresh_token
         payload = await decode_jwt(token=refresh_token)
         await validate_token_type(token_type=REFRESH_TOKEN_TYPE, payload=payload)
-
         user_id = payload.get("user_id")
-        user = self.user_repository.get_user_by_id(user_id=user_id)
+        user = await self.user_repository.get_user_by_id(user_id=user_id)
 
         if user is None:
             raise HTTPException(
@@ -130,11 +124,12 @@ class AuthService:
             access_token=access_token, refresh_token=refresh_token, user_id=user_id
         )
 
-    async def logout(self, credentials: HTTPAuthorizationCredentials):
-        if credentials is None:
+    async def logout(self, logout_request: LogoutRequest):
+        access_token = logout_request.access_token
+
+        if access_token is None:
             raise HTTPException(status_code=401, detail="Токен отсутствует")
 
-        access_token = credentials.credentials
         payload = await decode_jwt(token=access_token)
         await validate_token_type(token_type=ACCESS_TOKEN_TYPE, payload=payload)
 

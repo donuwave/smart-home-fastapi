@@ -17,7 +17,6 @@ async def get_auth_service(
     session_repository: SessionRepository = await get_session_repository(session=session)
 
     return AuthService(
-        db_session=session,
         user_repository=user_repository,
         profile_repository=profile_repository,
         session_repository=session_repository,

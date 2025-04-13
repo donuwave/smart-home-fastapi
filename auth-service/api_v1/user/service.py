@@ -2,9 +2,8 @@ from dataclasses import dataclass
 
 from pydantic import EmailStr
 
-from api_v1.user import User
 from api_v1.user.repository import UserRepository
-from api_v1.user.schema import UserCreate
+from api_v1.user.schema import UserCreate, User
 
 
 @dataclass

@@ -8,6 +8,8 @@ class SessionResponse(BaseModel):
     refresh_token: str
     device_id: str
 
+    class Config:
+        from_attributes = True
 
 class SessionCreate(BaseModel):
     access_token: str

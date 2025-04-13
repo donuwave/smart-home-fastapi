@@ -13,6 +13,11 @@ class LoginRequest(BaseModel):
     password: str = Form()
     device_id: str
 
+class RefreshRequest(BaseModel):
+    refresh_token: str
+
+class LogoutRequest(BaseModel):
+    access_token: str
 
 class AuthResponse(BaseModel):
     user_id: int

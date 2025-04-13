@@ -1,4 +1,5 @@
-from api_v1.profile.repository import ProfileRepository
+from api_v1.profile.service import ProfileService
 
-async def get_profile_repository() -> ProfileRepository:
-    return ProfileRepository()
+
+async def get_profile_service() -> ProfileService:
+    return ProfileService()

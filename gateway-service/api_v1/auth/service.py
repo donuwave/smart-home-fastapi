@@ -1,5 +1,6 @@
-import json
 from dataclasses import dataclass
+
+from fastapi import Response, status
 from fastapi.security import HTTPAuthorizationCredentials
 
 from api_v1.auth.schema import RegistrationRequest, AuthResponse, LoginRequest
@@ -25,7 +26,26 @@ class AuthService:
         return await connection_broker(queue_name="auth_queue", queue_name_callback="callback_auth_queue", body=body)
 
     async def refresh(self, credentials: HTTPAuthorizationCredentials) -> AuthResponse:
-        pass
+        body = {
+            "key": "auth.refresh",
+            "body": {
+                "refresh_token": credentials.credentials
+            }
+        }
 
-    async def logout(self, credentials: HTTPAuthorizationCredentials):
-        pass
+        return await connection_broker(queue_name="auth_queue", queue_name_callback="callback_auth_queue", body=body)
+
+    async def logout(self, credentials: HTTPAuthorizationCredentials, response: Response):
+        body = {
+            "key": "auth.logout",
+            "body": {
+                "access_token": credentials.credentials
+            }
+        }
+
+        logout_response = await connection_broker(queue_name="auth_queue", queue_name_callback="callback_auth_queue", body=body)
+
+        if logout_response is None:
+            response.status_code = status.HTTP_200_OK
+
+        return logout_response

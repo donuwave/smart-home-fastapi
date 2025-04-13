@@ -18,7 +18,6 @@ class SessionRepository:
 
     async def get_session_by_id(self, session_id: int) -> Optional[SessionResponse]:
         query = select(Session).where(Session.id == session_id)
-
         session = await self.db_session.execute(query)
         return session.scalar()
 
@@ -26,7 +25,6 @@ class SessionRepository:
         self, access_token: str
     ) -> Optional[SessionResponse]:
         query = select(Session).where(Session.access_token == access_token)
-
         session = await self.db_session.execute(query)
         return session.scalar()
 

@@ -1,9 +1,14 @@
-from api_v1.profile.repository import ProfileRepository
 from api_v1.profile.schema import ProfileCreateRequest
+from dataclasses import dataclass
 
+from config.broker import connection_broker
 
+@dataclass
 class ProfileService:
-    profile_repository: ProfileRepository
+    async def get_profile_by_id(self, profile_id: int):
+        body = {
+            "key": "profile.get_profile_by_id",
+            "body": profile_id
+        }
 
-    async def create_profile(self, profile: ProfileCreateRequest):
-        return await self.profile_repository.create_profile(profile)
+        return await connection_broker(queue_name="auth_queue", queue_name_callback="callback_auth_queue", body=body)
