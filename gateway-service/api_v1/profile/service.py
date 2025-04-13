@@ -1,4 +1,3 @@
-from api_v1.profile.schema import ProfileCreateRequest
 from dataclasses import dataclass
 
 from config.broker import connection_broker
