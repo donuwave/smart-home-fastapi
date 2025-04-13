@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 from fastapi import HTTPException, status
-from fastapi.security import HTTPAuthorizationCredentials
 
 from api_v1.auth.schema import RegistrationRequest, AuthResponse, LoginRequest, RefreshRequest, LogoutRequest
 from api_v1.auth.utils import (
