@@ -9,8 +9,8 @@ class RegistrationRequest(BaseModel):
 
 
 class LoginRequest(BaseModel):
-    email: EmailStr = Form()
-    password: str = Form()
+    email: EmailStr
+    password: str
     device_id: str
 
 class RefreshRequest(BaseModel):
