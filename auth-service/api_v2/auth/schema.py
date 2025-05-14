@@ -6,7 +6,7 @@ class RegistrationRequest(BaseModel):
     email: EmailStr = Form()
     password: str = Form()
     device_id: str
-
+1
 
 class LoginRequest(BaseModel):
     email: EmailStr = Form()

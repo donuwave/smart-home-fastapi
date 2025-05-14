@@ -1,5 +1,5 @@
 from pydantic import EmailStr
-from sqlalchemy import String, Integer, CheckConstraint, ForeignKey
+from sqlalchemy import String, Integer, CheckConstraint
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from typing import TYPE_CHECKING
 

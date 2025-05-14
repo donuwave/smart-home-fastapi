@@ -1,10 +1,9 @@
-from fastapi.params import Form
 from pydantic import BaseModel, EmailStr
 
 
 class RegistrationRequest(BaseModel):
-    email: EmailStr = Form()
-    password: str = Form()
+    email: EmailStr
+    password: str
     device_id: str
 
 

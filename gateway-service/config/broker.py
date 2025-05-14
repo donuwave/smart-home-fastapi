@@ -3,13 +3,10 @@ import uuid
 
 import aio_pika
 
-from settings import Settings
-
+from settings import app_settings
 
 async def connection_broker(queue_name: str, queue_name_callback: str, body: dict):
-    settings = Settings()
-
-    connection = await aio_pika.connect_robust(settings.AMQP_URL)
+    connection = await aio_pika.connect_robust(app_settings.AMQP_URL)
 
     try:
         async with connection:
