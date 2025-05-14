@@ -8,7 +8,7 @@ from .model import Session
 from .schema import (
     SessionResponse,
     SessionUpdate,
-    SessionCreate, SessionByAccessToken,
+    SessionCreate, SessionByAccessToken, SessionUpdateFCMTokenParams,
 )
 
 
@@ -48,9 +48,9 @@ class SessionRepository:
         await self.db_session.commit()
         return session.id
 
-    async def update_fcm_token_by_access_token(self, access_token: str, fcm_token: str):
-        current_session = await self.get_session_by_access_token(access_token=access_token)
-        current_session.fcm_token = fcm_token
+    async def update_fcm_token_by_access_token(self, session_params: SessionUpdateFCMTokenParams):
+        current_session = await self.get_session_by_access_token(access_token=session_params.access_token)
+        current_session.fcm_token = session_params.fcm_token
 
         await self.db_session.commit()
 

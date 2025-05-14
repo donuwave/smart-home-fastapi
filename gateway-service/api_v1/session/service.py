@@ -25,3 +25,14 @@ class SessionService:
         }
 
         return await connection_broker(queue_name="auth_queue", queue_name_callback="callback_auth_queue", body=body)
+
+    async def patch_session_fcm_token(self, credentials: HTTPAuthorizationCredentials, fcm_token: str):
+        body = {
+            "key": "session.patch_session_fcm_token",
+            "body": {
+                "access_token": credentials.credentials,
+                "fcm_token": fcm_token
+            }
+        }
+
+        await connection_broker(queue_name="auth_queue", queue_name_callback="callback_auth_queue", body=body)

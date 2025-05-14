@@ -27,3 +27,7 @@ class SessionUpdate(BaseModel):
 
 class SessionByAccessToken(SessionResponse):
     user_id: int
+
+class SessionUpdateFCMTokenParams(BaseModel):
+    access_token: str
+    fcm_token: str

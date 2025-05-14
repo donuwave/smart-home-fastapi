@@ -1,15 +1,13 @@
-from typing import Any, Coroutine
-
 from api_v1.auth.dependency import get_auth_service
 from api_v1.auth.schema import LoginRequest, RegistrationRequest, RefreshRequest, LogoutRequest
 from api_v1.profile.dependency import get_profile_service
 from api_v1.profile.schema import ProfileGetResponse
 from api_v1.session.dependency import get_session_service
-from api_v1.session.schema import SessionResponse
+from api_v1.session.schema import SessionResponse, SessionUpdateFCMTokenParams
 from config.database import db_helper
 from pydantic import EmailStr
 
-async def pick_service(key: str, body: dict | int | str | EmailStr) -> list[Any] | dict[str, dict]:
+async def pick_service(key: str, body: dict | int | str | EmailStr) -> list | dict[str, dict]:
     service = key.split(".")[0]
     handler = key.split(".")[1]
     session = await db_helper.scoped_session_dependency()
@@ -54,5 +52,8 @@ async def pick_service(key: str, body: dict | int | str | EmailStr) -> list[Any]
                 SessionResponse.model_validate(session).model_dump()
                 for session in result
             ]
+
+        if handler == "patch_session_fcm_token":
+            await session_service.patch_session_fcm_token(session_params=SessionUpdateFCMTokenParams(**body))
 
     return dict()

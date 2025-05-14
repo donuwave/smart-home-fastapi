@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from api_v1.session.repository import SessionRepository
-from api_v1.session.schema import SessionResponse
+from api_v1.session.schema import SessionResponse, SessionUpdateFCMTokenParams
 
 
 @dataclass
@@ -16,3 +16,6 @@ class SessionService:
 
         result = await self.session_repository.get_list_session_by_user_id(user_id=session.user_id)
         return result
+
+    async def patch_session_fcm_token(self, session_params: SessionUpdateFCMTokenParams):
+        await self.session_repository.update_fcm_token_by_access_token(session_params)
