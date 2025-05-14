@@ -5,3 +5,7 @@ auth_service_env
 /auth_service_env/
 
 /notification-service/serviceAccountKey.json
+
+/gateway-service/.idea
+/ml-IoT-service/.idea
+notification-service/.idea
