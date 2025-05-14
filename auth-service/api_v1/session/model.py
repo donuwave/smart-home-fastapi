@@ -9,5 +9,6 @@ class Session(Base):
     access_token: Mapped[str] = mapped_column(Text, nullable=False)
     refresh_token: Mapped[str] = mapped_column(Text, nullable=False)
     device_id: Mapped[str] = mapped_column(String, nullable=False)
+    fcm_token: Mapped[str] = mapped_column(String, nullable=True)
 
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id"), nullable=False)
