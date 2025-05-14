@@ -24,3 +24,6 @@ class SessionUpdate(BaseModel):
     access_token: Optional[str] = None
     refresh_token: Optional[str] = None
     device_id: Optional[str] = None
+
+class SessionByAccessToken(SessionResponse):
+    user_id: int

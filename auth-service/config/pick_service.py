@@ -1,3 +1,5 @@
+from typing import Any, Coroutine
+
 from api_v1.auth.dependency import get_auth_service
 from api_v1.auth.schema import LoginRequest, RegistrationRequest, RefreshRequest, LogoutRequest
 from api_v1.profile.dependency import get_profile_service
@@ -7,7 +9,7 @@ from api_v1.session.schema import SessionResponse
 from config.database import db_helper
 from pydantic import EmailStr
 
-async def pick_service(key: str, body: dict | int | str | EmailStr) -> dict | int:
+async def pick_service(key: str, body: dict | int | str | EmailStr) -> list[Any] | dict[str, dict]:
     service = key.split(".")[0]
     handler = key.split(".")[1]
     session = await db_helper.scoped_session_dependency()
@@ -44,5 +46,13 @@ async def pick_service(key: str, body: dict | int | str | EmailStr) -> dict | in
         if handler == "get_session":
             result = await session_service.get_session(session_id=body)
             return SessionResponse.model_validate(result).model_dump()
+
+        if handler == "get_list_session":
+            result = await session_service.get_list_session(access_token=body)
+
+            return [
+                SessionResponse.model_validate(session).model_dump()
+                for session in result
+            ]
 
     return dict()

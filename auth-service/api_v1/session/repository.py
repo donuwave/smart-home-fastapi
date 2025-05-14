@@ -1,15 +1,14 @@
 from dataclasses import dataclass
-from typing import Optional, List, Any, Coroutine, Sequence
+from typing import Optional
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api_v1.session import Session
 from .model import Session
 from .schema import (
     SessionResponse,
     SessionUpdate,
-    SessionCreate,
+    SessionCreate, SessionByAccessToken,
 )
 
 
@@ -24,7 +23,7 @@ class SessionRepository:
 
     async def get_session_by_access_token(
         self, access_token: str
-    ) -> Optional[SessionResponse]:
+    ) -> Optional[SessionByAccessToken]:
         query = select(Session).where(Session.access_token == access_token)
         session = await self.db_session.execute(query)
         return session.scalar()
@@ -37,7 +36,7 @@ class SessionRepository:
         session = await self.db_session.execute(query)
         return session.scalar()
 
-    async def get_sessions_by_user_id(self, user_id: int) -> list[SessionResponse]:
+    async def get_list_session_by_user_id(self, user_id: int) -> list[SessionResponse]:
         query = select(Session).where(Session.user_id == user_id)
         result = await self.db_session.execute(query)
 
