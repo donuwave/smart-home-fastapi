@@ -15,4 +15,4 @@ class NotificationService:
             "body": dict(push_params)
         }
 
-        return await connection_broker(queue_name=self.queue_name, queue_name_callback=self.queue_name_callback, body=body)
+        await connection_broker(queue_name=self.queue_name, queue_name_callback=self.queue_name_callback, body=body)

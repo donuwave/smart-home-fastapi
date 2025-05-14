@@ -15,4 +15,4 @@ async def send_push(
     push_params: PushParams,
     notification_service: Annotated[NotificationService, Depends(get_notification_service)]
 ):
-    return await notification_service.send_push(push_params=push_params);
+    return await notification_service.send_push(push_params=push_params)
