@@ -9,9 +9,7 @@ from alembic import context
 from config import Base
 from config.settings import app_settings
 
-from api_v1.session import Session
-from api_v1.user import User
-from api_v1.profile import Profile
+from api_v1.home import Home
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -57,8 +55,9 @@ def run_migrations_offline() -> None:
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
         render_as_batch=True,
-        version_table="alembic_version_auth",
-        version_table_schema="auth",
+        include_schemas=True,
+        version_table="alembic_version_home",
+        version_table_schema="home",
     )
 
     with context.begin_transaction():

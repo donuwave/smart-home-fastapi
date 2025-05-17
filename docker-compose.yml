@@ -1,6 +1,6 @@
 services:
 
-  db:
+  db-auth:
     image: postgres:16.2
     restart: always
     shm_size: 128mb
@@ -10,6 +10,17 @@ services:
       POSTGRES_PASSWORD: qwerty
       POSTGRES_USER: postgres
       POSTGRES_DB: smart-home-auth-service
+
+  db-smart-home:
+    image: postgres:16.2
+    restart: always
+    shm_size: 128mb
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_USER: postgres
+      POSTGRES_DB: smart-home-smart-service
 
   rabbitmq:
     image: rabbitmq:3-management

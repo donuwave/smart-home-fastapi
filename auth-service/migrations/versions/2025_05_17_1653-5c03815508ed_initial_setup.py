@@ -1,8 +1,8 @@
-"""new field in session
+"""initial setup
 
-Revision ID: e5ec4c129bb4
-Revises: 3e19c8f004ec
-Create Date: 2025-05-14 22:49:38.654253
+Revision ID: 5c03815508ed
+Revises:
+Create Date: 2025-05-17 16:53:57.263850
 
 """
 
@@ -13,8 +13,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "e5ec4c129bb4"
-down_revision: Union[str, None] = "3e19c8f004ec"
+revision: str = "5c03815508ed"
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -50,7 +50,7 @@ def upgrade() -> None:
         sa.Column("access_token", sa.Text(), nullable=False),
         sa.Column("refresh_token", sa.Text(), nullable=False),
         sa.Column("device_id", sa.String(), nullable=False),
-        sa.Column("fcm_token", sa.String(), nullable=False),
+        sa.Column("fcm_token", sa.String(), nullable=True),
         sa.Column("user_id", sa.Integer(), nullable=False),
         sa.Column("id", sa.Integer(), nullable=False),
         sa.ForeignKeyConstraint(
