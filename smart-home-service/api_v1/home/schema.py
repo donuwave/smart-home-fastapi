@@ -8,7 +8,7 @@ class HomeCreateRequest(BaseModel):
     address: str
     owner_id: int
 
-class GetHomeRequest(BaseModel):
+class GetHomeResponse(BaseModel):
     id: int
     name: str
     address: str

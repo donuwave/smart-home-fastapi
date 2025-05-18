@@ -4,7 +4,6 @@ from config import Base
 
 
 class Home(Base):
-    id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String)
     address: Mapped[str] = mapped_column(String)
     owner_id: Mapped[int] = mapped_column(Integer)
