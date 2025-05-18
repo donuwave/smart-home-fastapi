@@ -3,7 +3,7 @@ from api_v1.auth.schema import LoginRequest, RegistrationRequest, RefreshRequest
 from api_v1.profile.dependency import get_profile_service
 from api_v1.profile.schema import ProfileGetResponse
 from api_v1.session.dependency import get_session_service
-from api_v1.session.schema import SessionResponse, SessionUpdateFCMTokenParams
+from api_v1.session.schema import SessionResponse, SessionUpdateFCMTokenParams, SessionByAccessToken
 from config.database import db_helper
 from pydantic import EmailStr
 
@@ -52,6 +52,10 @@ async def pick_service(key: str, body: dict | int | str | EmailStr) -> list | di
                 SessionResponse.model_validate(session).model_dump()
                 for session in result
             ]
+
+        if handler == 'get_session_by_access_token':
+            result = await session_service.get_session_by_access_token(access_token=body)
+            return SessionByAccessToken.model_validate(result).model_dump()
 
         if handler == "patch_session_fcm_token":
             await session_service.patch_session_fcm_token(session_params=SessionUpdateFCMTokenParams(**body))

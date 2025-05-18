@@ -8,6 +8,8 @@ from config.broker import connection_broker
 
 @dataclass
 class SessionService:
+    queue_name = "auth_queue"
+    queue_name_callback = "callback_auth_queue"
 
     async def get_session(self, session_id: int) -> SessionResponse:
         body = {
@@ -15,7 +17,15 @@ class SessionService:
             "body": session_id
         }
 
-        return await connection_broker(queue_name="auth_queue", queue_name_callback="callback_auth_queue", body=body)
+        return await connection_broker(queue_name=self.queue_name, queue_name_callback=self.queue_name_callback, body=body)
+
+    async def get_session_by_access_token(self, credentials: HTTPAuthorizationCredentials):
+        body = {
+            "key": "session.get_session_by_access_token",
+            "body": credentials.credentials
+        }
+
+        return await connection_broker(queue_name=self.queue_name, queue_name_callback=self.queue_name_callback, body=body)
 
 
     async def get_list_session(self, credentials: HTTPAuthorizationCredentials) -> list[SessionResponse]:
@@ -24,7 +34,7 @@ class SessionService:
             "body": credentials.credentials
         }
 
-        return await connection_broker(queue_name="auth_queue", queue_name_callback="callback_auth_queue", body=body)
+        return await connection_broker(queue_name=self.queue_name, queue_name_callback=self.queue_name_callback, body=body)
 
     async def patch_session_fcm_token(self, credentials: HTTPAuthorizationCredentials, fcm_token: str):
         body = {
@@ -35,4 +45,4 @@ class SessionService:
             }
         }
 
-        await connection_broker(queue_name="auth_queue", queue_name_callback="callback_auth_queue", body=body)
+        await connection_broker(queue_name=self.queue_name, queue_name_callback=self.queue_name_callback, body=body)

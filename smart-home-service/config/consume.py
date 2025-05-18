@@ -16,7 +16,7 @@ async def callback_message(correlation_id: str, body: dict):
         )
         await channel.default_exchange.publish(
             message=message,
-            routing_key="callback_auth_queue"
+            routing_key="callback_home_queue"
         )
 
 
@@ -36,5 +36,5 @@ async def consume_message(message: aio_pika.IncomingMessage):
 async def make_broker_consumer():
     connection = await aio_pika.connect_robust(settings.AMQP_URL)
     chanel = await connection.channel()
-    queue = await chanel.declare_queue("auth_queue", durable=True)
+    queue = await chanel.declare_queue("home_queue", durable=True)
     await queue.consume(consume_message)

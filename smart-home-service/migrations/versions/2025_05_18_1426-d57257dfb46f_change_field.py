@@ -1,15 +1,15 @@
-"""create Home table
+"""change field
 
-Revision ID: e8604194fbe8
+Revision ID: d57257dfb46f
 Revises:
-Create Date: 2025-05-17 16:48:59.762682
+Create Date: 2025-05-18 14:26:58.804928
 
 """
 
 from alembic import op
 import sqlalchemy as sa
 
-revision = "e8604194fbe8"
+revision = "d57257dfb46f"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,7 +23,7 @@ def upgrade():
         sa.Column("name", sa.String(), nullable=False),
         sa.Column("address", sa.String(), nullable=False),
         sa.Column("owner_id", sa.Integer(), nullable=False),
-        sa.Column("invited_users_ids", sa.ARRAY(sa.Integer()), nullable=False),
+        sa.Column("invited_users_ids", sa.ARRAY(sa.Integer()), nullable=True),
         sa.PrimaryKeyConstraint("id"),
     )
     # ### end Alembic commands ###
