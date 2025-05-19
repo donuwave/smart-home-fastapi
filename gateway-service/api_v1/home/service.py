@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from api_v1.home.schema import HomeCreateRequest, GetHomeRequest
+from api_v1.home.schema import HomeCreateRequest, GetHomeRequest, AddDeviceRequest
 from config.broker import connection_broker
 
 
@@ -37,6 +37,15 @@ class HomeService:
         body = {
             "key": "home.create_home",
             "body": dict(created_home)
+        }
+
+        await connection_broker(queue_name=self.queue_name, queue_name_callback=self.queue_name_callback, body=body)
+
+
+    async def add_device_in_home(self, added_device: AddDeviceRequest):
+        body = {
+            "key": "home.add_device_in_home",
+            "body": dict(added_device)
         }
 
         await connection_broker(queue_name=self.queue_name, queue_name_callback=self.queue_name_callback, body=body)

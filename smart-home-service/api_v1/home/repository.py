@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api_v1.home import Home
-from api_v1.home.schema import HomeCreateRequest, GetHomeResponse
+from api_v1.home.schema import HomeCreateRequest, GetHomeResponse, AddDeviceRequest
 
 
 @dataclass
@@ -28,3 +28,6 @@ class HomeRepository:
         home = Home(**created_home.model_dump())
         self.db_session.add(home)
         await self.db_session.commit()
+
+    async def add_device_in_home(self, added_device: AddDeviceRequest):
+        pass

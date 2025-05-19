@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from api_v1.home.repository import HomeRepository
-from api_v1.home.schema import HomeCreateRequest, GetHomeResponse
+from api_v1.home.schema import HomeCreateRequest, GetHomeResponse, AddDeviceRequest
 
 
 @dataclass
@@ -22,3 +22,7 @@ class HomeService:
 
     async def create_home(self, created_home: HomeCreateRequest):
         return await self.home_repository.create_home(created_home=created_home)
+
+
+    async def add_device_in_home(self, added_device: AddDeviceRequest):
+        return await self.home_repository.add_device_in_home(added_device=added_device)

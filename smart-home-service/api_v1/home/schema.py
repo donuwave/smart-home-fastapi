@@ -8,6 +8,12 @@ class HomeCreateRequest(BaseModel):
     address: str
     owner_id: int
 
+
+class AddDeviceRequest(BaseModel):
+    home_id: int
+    device_id: int
+
+
 class GetHomeResponse(BaseModel):
     id: int
     name: str
