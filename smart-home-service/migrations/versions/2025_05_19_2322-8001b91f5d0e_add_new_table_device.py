@@ -1,16 +1,16 @@
-"""change field
+"""add new table - device
 
-Revision ID: 9d5d5eee6e07
-Revises: d57257dfb46f
-Create Date: 2025-05-18 16:13:24.195756
+Revision ID: 8001b91f5d0e
+Revises: 744f682f4a25
+Create Date: 2025-05-19 23:22:43.596324
 
 """
 
 from alembic import op
 import sqlalchemy as sa
 
-revision = "9d5d5eee6e07"
-down_revision = "d57257dfb46f"
+revision = "8001b91f5d0e"
+down_revision = "744f682f4a25"
 branch_labels = None
 depends_on = None
 

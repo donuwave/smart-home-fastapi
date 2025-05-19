@@ -9,6 +9,7 @@ from alembic import context
 from config import Base
 from config.settings import app_settings
 
+from api_v1.device import Device
 from api_v1.home import Home
 
 # this is the Alembic Config object, which provides

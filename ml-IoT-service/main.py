@@ -6,7 +6,7 @@ import pickle
 
 app = FastAPI()
 
-STREAM_URL = 'rtsp://admin:Lfybbk1412200!@192.168.0.103:554/Streaming/Channels/101'
+STREAM_URL = 'rtsp://admin:Lfybbk1412200!@192.168.0.102:554/Streaming/Channels/101'
 
 with open('face_encodings.pkl', 'rb') as f:
     encodings_data = pickle.load(f)
