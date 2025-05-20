@@ -34,10 +34,6 @@ async def pick_service(key: str, body: dict | int | str | EmailStr) -> list | di
         if handler == "create_home":
             return await home_service.create_home(created_home=HomeCreateRequest(**body))
 
-
-        if handler == 'add_device_in_home':
-            return await home_service.add_device_in_home(added_device=AddDeviceRequest(**body))
-
     if service == "device":
         device_service = await get_device_service(session=session)
 

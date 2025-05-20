@@ -5,7 +5,7 @@ from fastapi.params import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from api_v1.home.dependency import get_home_service
-from api_v1.home.schema import HomeCreateRequest, GetHomeRequest, AddDeviceRequest
+from api_v1.home.schema import HomeCreateRequest, GetHomeRequest
 from api_v1.home.service import HomeService
 from api_v1.session.dependency import get_session_service
 from api_v1.session.schema import SessionCreate
@@ -41,12 +41,3 @@ async def create_home(
         home_service: Annotated[HomeService, Depends(get_home_service)]
 ):
     return await home_service.create_home(created_home=created_home)
-
-
-@router.post("/device", dependencies=[Depends(http_bearer)])
-async def add_device_in_home(
-    home_service: Annotated[HomeService, Depends(get_home_service)],
-    added_device: AddDeviceRequest
-):
-
-    return await home_service.add_device_in_home(added_device=added_device)

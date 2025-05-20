@@ -9,11 +9,6 @@ class HomeCreateRequest(BaseModel):
     owner_id: int
 
 
-class AddDeviceRequest(BaseModel):
-    home_id: int
-    device_id: int
-
-
 class GetHomeRequest(BaseModel):
     id: int
     name: str

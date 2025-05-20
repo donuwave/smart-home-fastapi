@@ -28,6 +28,3 @@ class HomeRepository:
         home = Home(**created_home.model_dump())
         self.db_session.add(home)
         await self.db_session.commit()
-
-    async def add_device_in_home(self, added_device: AddDeviceRequest):
-        pass
