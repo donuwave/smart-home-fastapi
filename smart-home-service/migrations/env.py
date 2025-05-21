@@ -11,6 +11,7 @@ from config.settings import app_settings
 
 from api_v1.device import Device
 from api_v1.home import Home
+from api_v1.face import Face
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

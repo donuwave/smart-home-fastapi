@@ -16,5 +16,6 @@ class GetHomeRequest(BaseModel):
     owner_id: int
     invited_users_ids: Optional[List[int]]
 
+
     class Config:
         from_attributes = True

@@ -12,7 +12,10 @@ services:
       POSTGRES_DB: smart-home-auth-service
 
   db-smart-home:
-    image: postgres:16.2
+    build:
+      context: .
+      dockerfile: ./smart-home-service/db/Dockerfile
+    image: smart-home-postgres:16.2-pgvector
     restart: always
     shm_size: 128mb
     ports:
@@ -21,6 +24,8 @@ services:
       POSTGRES_PASSWORD: qwerty
       POSTGRES_USER: postgres
       POSTGRES_DB: smart-home-smart-service
+    volumes:
+      - ./db/initdb:/docker-entrypoint-initdb.d
 
   rabbitmq:
     image: rabbitmq:3-management

@@ -1,5 +1,7 @@
 from api_v1.device.dependency import get_device_service
 from api_v1.device.schema import GetDeviceResponse, CreateDeviceRequest
+from api_v1.face.dependency import get_face_service
+from api_v1.face.schema import FaceForm
 from api_v1.home.dependency import get_home_service
 from api_v1.home.schema import HomeCreateRequest, GetHomeResponse, AddDeviceRequest
 from config.database import db_helper
@@ -50,6 +52,12 @@ async def pick_service(key: str, body: dict | int | str | EmailStr) -> list | di
 
         if handler == 'create_device':
             await device_service.create_device(created_device=CreateDeviceRequest(**body))
+
+    if service == 'face':
+        face_service = await get_face_service(session=session)
+
+        if handler == 'create_face':
+            return await face_service.create_face(face_request=FaceForm(**body))
 
 
     return dict()

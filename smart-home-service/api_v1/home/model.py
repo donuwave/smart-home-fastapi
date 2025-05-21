@@ -4,6 +4,7 @@ from config import Base
 
 
 from ..device.model import Device
+from ..face.model import Face
 
 
 class Home(Base):
@@ -16,4 +17,7 @@ class Home(Base):
     invited_users_ids: Mapped[list[int]] = mapped_column(ARRAY(Integer), nullable=True)
     devices: Mapped[list["Device"]] = relationship(
         "Device", back_populates="home", cascade="all, delete-orphan"
+    )
+    faces: Mapped[list["Face"]] = relationship(
+        "Face", back_populates='home', cascade="all, delete-orphan"
     )
