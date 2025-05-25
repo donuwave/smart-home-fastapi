@@ -8,7 +8,7 @@ from .model import Session
 from .schema import (
     SessionResponse,
     SessionUpdate,
-    SessionCreate, SessionByAccessToken, SessionUpdateFCMTokenParams,
+    SessionCreate, SessionByAccessToken, SessionUpdateFCMTokenParams, SessionUpdateHomeIdParams,
 )
 
 
@@ -27,6 +27,11 @@ class SessionRepository:
         query = select(Session).where(Session.access_token == access_token)
         session = await self.db_session.execute(query)
         return session.scalar()
+
+    async def get_session_list_by_home_id(self, home_id: int) -> list[SessionResponse]:
+        query = select(Session).where(Session.home_id == home_id)
+        session_list = await self.db_session.execute(query)
+        return session_list.scalars().all()
 
     async def get_session_by_refresh_token(
         self, refresh_token: str
@@ -47,6 +52,12 @@ class SessionRepository:
         self.db_session.add(session)
         await self.db_session.commit()
         return session.id
+
+    async def update_home_id_by_access_token(self, session_params: SessionUpdateHomeIdParams):
+        current_session = await self.get_session_by_access_token(access_token=session_params.access_token)
+        current_session.home_id = session_params.home_id
+
+        await self.db_session.commit()
 
     async def update_fcm_token_by_access_token(self, session_params: SessionUpdateFCMTokenParams):
         current_session = await self.get_session_by_access_token(access_token=session_params.access_token)

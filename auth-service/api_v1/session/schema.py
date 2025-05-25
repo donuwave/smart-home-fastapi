@@ -8,6 +8,7 @@ class SessionResponse(BaseModel):
     refresh_token: str
     device_id: str
     fcm_token: Optional[str] = None
+    home_id: Optional[int] = None
 
     class Config:
         from_attributes = True
@@ -27,6 +28,10 @@ class SessionUpdate(BaseModel):
 
 class SessionByAccessToken(SessionResponse):
     user_id: int
+
+class SessionUpdateHomeIdParams(BaseModel):
+    access_token: str
+    home_id: int
 
 class SessionUpdateFCMTokenParams(BaseModel):
     access_token: str

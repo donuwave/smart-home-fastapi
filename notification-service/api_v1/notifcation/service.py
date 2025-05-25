@@ -9,4 +9,4 @@ class NotificationService:
     notification_repository: NotificationRepository
 
     async def send_push(self, notification_request: NotificationRequest):
-        await self.notification_repository.send_push(notification_request=notification_request)
+        return await self.notification_repository.send_push(notification_request=notification_request)

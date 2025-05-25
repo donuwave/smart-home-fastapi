@@ -8,6 +8,7 @@ class SessionResponse(BaseModel):
     refresh_token: str
     device_id: str
     fcm_token: Optional[str] = None
+    home_id: Optional[int] = None
 
     class Config:
         from_attributes = True

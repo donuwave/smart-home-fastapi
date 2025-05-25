@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 
 from api_v1.session.repository import SessionRepository
-from api_v1.session.schema import SessionResponse, SessionUpdateFCMTokenParams, SessionByAccessToken
+from api_v1.session.schema import SessionResponse, SessionUpdateFCMTokenParams, SessionByAccessToken, \
+    SessionUpdateHomeIdParams
 
 
 @dataclass
@@ -16,8 +17,14 @@ class SessionService:
         result = await self.session_repository.get_list_session_by_user_id(user_id=session.user_id)
         return result
 
+    async def get_list_session_by_home_id(self, home_id: int) -> list[SessionResponse]:
+        return await self.session_repository.get_session_list_by_home_id(home_id=home_id)
+
     async def get_session_by_access_token(self, access_token: str) -> SessionByAccessToken:
         return await self.session_repository.get_session_by_access_token(access_token=access_token)
 
+    async def patch_session_home_id(self, session_params: SessionUpdateHomeIdParams):
+        await self.session_repository.update_home_id_by_access_token(session_params=session_params)
+
     async def patch_session_fcm_token(self, session_params: SessionUpdateFCMTokenParams):
-        await self.session_repository.update_fcm_token_by_access_token(session_params)
+        await self.session_repository.update_fcm_token_by_access_token(session_params=session_params)

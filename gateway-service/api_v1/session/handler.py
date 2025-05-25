@@ -10,7 +10,7 @@ router = APIRouter(tags=["session"])
 http_bearer = HTTPBearer()
 
 
-@router.get("/session_id", dependencies=[Depends(http_bearer)])
+@router.get("/{session_id}", dependencies=[Depends(http_bearer)])
 async def get_session(
     session_id: int,
     session_service: Annotated[SessionService, Depends(get_session_service)],
@@ -19,12 +19,27 @@ async def get_session(
 
 @router.get("", dependencies=[Depends(http_bearer)])
 async def get_list_session(
-        session_service: Annotated[SessionService, Depends(get_session_service)],
-        credentials: HTTPAuthorizationCredentials = Depends(http_bearer),
+    session_service: Annotated[SessionService, Depends(get_session_service)],
+    credentials: HTTPAuthorizationCredentials = Depends(http_bearer),
 ):
     return await session_service.get_list_session(credentials=credentials)
 
-@router.patch("", dependencies=[Depends(http_bearer)])
+@router.get("/home-id/{home_id}")
+async def get_list_session_by_home_id(
+    home_id: int,
+    session_service: Annotated[SessionService, Depends(get_session_service)],
+):
+    return await session_service.get_session_list_by_home_id(home_id=home_id)
+
+@router.patch("/change-home-id")
+async def patch_session_home_id(
+    session_service: Annotated[SessionService, Depends(get_session_service)],
+    home_id: int,
+    credentials: HTTPAuthorizationCredentials = Depends(http_bearer),
+):
+    return await session_service.patch_session_home_id(home_id=home_id, credentials=credentials)
+
+@router.patch("/change-fcm-token", dependencies=[Depends(http_bearer)])
 async def patch_session_fcm_token(
         session_service: Annotated[SessionService, Depends(get_session_service)],
         fcm_token: str,

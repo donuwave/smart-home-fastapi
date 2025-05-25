@@ -12,6 +12,10 @@ from api_v1.device.schema import GetDeviceResponse, CreateDeviceRequest
 class DeviceRepository:
     db_session: AsyncSession
 
+    async def get_all_device(self) -> list[GetDeviceResponse]:
+        result = await self.db_session.execute(select(Device))
+        return result.scalars().all()
+
     async def get_list_device_in_home(self, home_id: int) -> list[GetDeviceResponse]:
         result = await self.db_session.execute(select(Device).where(Device.home_id == home_id))
         return result.scalars().all()
