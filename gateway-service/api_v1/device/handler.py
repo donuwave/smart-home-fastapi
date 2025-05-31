@@ -11,13 +11,12 @@ router = APIRouter(tags=["device"])
 http_bearer = HTTPBearer()
 
 
-@router.get("", dependencies=[Depends(http_bearer)] ,response_model=List[GetDeviceResponse])
+@router.get("/home/{home_id}", dependencies=[Depends(http_bearer)] ,response_model=List[GetDeviceResponse])
 async def get_list_device_in_home(
     device_service: Annotated[DeviceService, Depends(get_device_service)],
-    home_id: int
+    home_id: int,
 ):
-    return await device_service.get_list_device_in_home(home_id=home_id)
-
+   return await device_service.get_list_device_in_home(home_id=home_id)
 
 @router.get("/{device_id}", dependencies=[Depends(http_bearer)], response_model=GetDeviceResponse)
 async def get_item_device_in_home(

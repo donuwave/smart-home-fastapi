@@ -2,6 +2,7 @@ import json
 import uuid
 
 import aio_pika
+from fastapi import HTTPException
 
 from settings import app_settings
 
@@ -33,4 +34,5 @@ async def connection_broker(queue_name: str, queue_name_callback: str, body: dic
                             result = json.loads(message.body.decode())
                             return result
     except Exception as e:
-        return e
+        print(f"RABBITMQ ERROR: {e}")
+        raise HTTPException(status_code=500, detail=str(e))

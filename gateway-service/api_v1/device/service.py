@@ -17,7 +17,6 @@ class DeviceService:
 
         return await connection_broker(queue_name=self.queue_name, queue_name_callback=self.queue_name_callback, body=body)
 
-
     async def get_item_device_in_home(self, device_id: int):
         body = {
             "key": "device.get_item_device_in_home",

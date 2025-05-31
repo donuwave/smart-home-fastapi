@@ -11,6 +11,6 @@ router = APIRouter(tags=["profile"])
 http_bearer = HTTPBearer()
 
 
-@router.get("", dependencies=[Depends(http_bearer)])
+@router.get("/{profile_id}", dependencies=[Depends(http_bearer)])
 async def get_profile(profile_id: int, profile_service: Annotated[ProfileService, Depends(get_profile_service)]):
     return await profile_service.get_profile_by_id(profile_id=profile_id)
