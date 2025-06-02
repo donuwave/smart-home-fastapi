@@ -16,3 +16,11 @@ class NotificationService:
         }
 
         await connection_broker(queue_name=self.queue_name, queue_name_callback=self.queue_name_callback, body=body)
+
+    async def get_list_notification(self, home_id: int):
+        body = {
+            "key": "notification.get_list_notification",
+            "body": home_id
+        }
+
+        return await connection_broker(queue_name=self.queue_name, queue_name_callback=self.queue_name_callback, body=body)

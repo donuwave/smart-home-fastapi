@@ -1,24 +1,21 @@
 from dataclasses import dataclass
 
-from fastapi import HTTPException
-from firebase_admin import messaging
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from api_v1.notifcation.model import NotificationRequest
+from api_v1.notifcation import Notification
+from api_v1.notifcation.schema import NotificationResponse
 
 
 @dataclass
 class NotificationRepository:
+    db_session: AsyncSession
 
-    async def send_push(self, notification_request: NotificationRequest):
-        message = messaging.Message(
-            token=notification_request.token,
-            notification=messaging.Notification(
-                title=notification_request.title,
-                body=notification_request.body,
-            )
-        )
-        try:
-            message_id = messaging.send(message)
-            return {"success": True, "message_id": message_id}
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e))
+    async def get_list_notification_in_home(self, home_id: int) -> list[NotificationResponse]:
+        result = await self.db_session.execute(select(Notification).where(Notification.home_id == home_id))
+        return result.scalars().all()
+
+    async def create_device(self, title: str, body: str, home_id: int):
+        result = Notification(title=title, body=body, home_id=home_id)
+        self.db_session.add(result)
+        await self.db_session.commit()

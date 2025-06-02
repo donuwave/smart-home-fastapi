@@ -16,3 +16,11 @@ async def send_push(
     notification_service: Annotated[NotificationService, Depends(get_notification_service)]
 ):
     return await notification_service.send_push(push_params=push_params)
+
+
+@router.get("/{home_id}")
+async def get_list_notification_by_id(
+    home_id: int,
+    notification_service: Annotated[NotificationService, Depends(get_notification_service)]
+):
+    return await notification_service.get_list_notification(home_id=home_id)

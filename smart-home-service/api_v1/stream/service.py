@@ -186,7 +186,8 @@ class StreamService:
             push_params = PushParams(
                 token=token,
                 title="⚠️ Обнаружен новый незнакомец",
-                body="Проверьте камеру"
+                body="Проверьте камеру",
+                home_id=home_id
             )
             push_body = {
                 "key": "notification.send_push",
