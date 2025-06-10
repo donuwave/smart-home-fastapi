@@ -16,5 +16,4 @@
 - Слой Репозиторий - 3.6.1 (можно вынести получение данных в слой репозиторий, в класс)
 - Авторизация - 5.1.1 5.2.1 5.3.1
 
-
-- Клиент: https://github.com/donuwave/smart-home-flutter
+Клиенткое приложение: https://github.com/donuwave/smart-home-flutter
